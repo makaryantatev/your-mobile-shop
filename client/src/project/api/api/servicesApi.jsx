@@ -14,8 +14,8 @@ const productApi = {
     getProduct: () => axiosInstance.get(`/product`),
 
     getProductBasket: (token) => axiosInstance.get(`/basket`, {
-        headers: { 
-            Authorization: `Bearer ${token}` 
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     }),
 
@@ -26,15 +26,32 @@ const productApi = {
         },
     }),
     deleteFromBasket: (token, id) => axiosInstance.delete(`/basket/${id}`, {
-        headers: { 
-            Authorization: `Bearer ${token}` 
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     }),
     removeFromBasket: (token) => axiosInstance.delete(`/basket`, {
-        headers: { 
-            Authorization: `Bearer ${token}` 
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     }),
+    forgotPassword: (data) => axiosInstance.put('/auth/forgot-password', data),
+    forgotPasswordCheck: (data) => axiosInstance.post('/auth/forgot-password-check', data),
+    forgotPasswordNew: (data) => axiosInstance.put('/auth/forgot-password-new', data),
+
+
+    // addReview: (token, data) => axiosInstance.post('/api/add-review', data, {
+    //     headers: { Authorization: `Bearer ${token}` }
+    // })
+
+    addReview: (token, data) => axiosInstance.post('http://localhost:3001/api/reviews/add-review', data, {
+        headers: { Authorization: `Bearer ${token}` }
+    }),
+    getReviews: (token) => axiosInstance.get('http://localhost:3001/api/reviews/all-reviews', {
+        headers: { Authorization: `Bearer ${token}` }
+    }),
+    getDoneReviews: () => axiosInstance.get('http://localhost:3001/api/reviews/done-reviews'),
+
 
 };
 

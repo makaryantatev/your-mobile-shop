@@ -32,7 +32,7 @@ export const MainDiv = styled.div`
     box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 10px;
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
     width: 100%;
     max-width: 430px;
     background: linear-gradient(120deg, #f0fbff, #f4f4f4);

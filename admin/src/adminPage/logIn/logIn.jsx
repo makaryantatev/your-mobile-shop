@@ -16,7 +16,7 @@ export const LogInAdmin = () => {
             const res = await adminLogin(value)
             if(res.status === 200) {
                 localStorage.setItem('adminToken', res.data.token)
-                nav('/admin')
+                nav('/')
             }
         } catch(error){
             console.error(error);

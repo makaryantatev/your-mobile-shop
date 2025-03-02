@@ -31,11 +31,11 @@ export const MyProduct = () => {
             return;
         }
         await productApi.addToBasket(token, id);
-        setBarev(e => !e)
+        setBarev(true)
 
-        setTimeout(() => {
-            setBarev(false);
-        }, 3000);
+        // setTimeout(() => {
+        //     setBarev(false);
+        // }, 3000);
     };
 
     const formatPrice = (price) => {
@@ -106,7 +106,7 @@ export const MyProduct = () => {
                             <Model>{e.brand} {e.name}</Model>
                             <Price>֏ {e.price}</Price>
                             <Monthly> Monthly <span>֏ {formatPrice(e.price)} </span> </Monthly>
-                            <ButtonDiv onClick={() => addToBasket(e._id)}> Add to basket <span style={{ fontSize: "16px" }}> <TiShoppingCart /> </span> </ButtonDiv>
+                            <ButtonDiv onClick={() => addToBasket(e._id)}> {barev ? "Delete from basket" : "Add to basket"} <span style={{ fontSize: "16px" }}> <TiShoppingCart /> </span> </ButtonDiv>
                             <br />
                             <ButtonDiv onClick={() => nav(`/phone/${e._id}`)}> View the phone </ButtonDiv>
                             <ButtonDiv> <span> Credit price </span> </ButtonDiv>

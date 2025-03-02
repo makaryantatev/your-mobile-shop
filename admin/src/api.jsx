@@ -20,4 +20,17 @@ export const adminProfile = (token) => api.get("/auth/profile/admin", {
   },
 })
 
+export const getAllReviews = (adminToken) => api.get("/reviews/all-reviews", {
+  headers: {
+    Authorization: `Bearer ${adminToken}`,
+  },
+});
+
+export const getDoneReviews = () => api.get("/reviews/done-reviews");
+export const updateReviewStatus = (token, id, status) => api.put(`/reviews/put-reviews/${id}`, { status }, {
+  headers: { 
+    Authorization: `Bearer ${token}` 
+  }
+});
+
 export default api;

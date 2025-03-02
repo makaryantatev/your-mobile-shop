@@ -18,28 +18,41 @@ export const SignUp = () => {
         })
     }
     const nav = useNavigate()
-    const addUser = async () => {
-        // try {
-        //     const req = await fetch('http://localhost:3001/api/auth/register', {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(value)
-        //     })
-        //     const res = await req.json()
-        //     console.log(res);
-        //     if (req.ok) {
-        //         setIsRegister(true)
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    // const addUser = async () => {
+    //     // try {
+    //     //     const req = await fetch('http://localhost:3001/api/auth/register', {
+    //     //         method: "POST",
+    //     //         headers: {
+    //     //             "Content-Type": "application/json"
+    //     //         },
+    //     //         body: JSON.stringify(value)
+    //     //     })
+    //     //     const res = await req.json()
+    //     //     console.log(res);
+    //     //     if (req.ok) {
+    //     //         setIsRegister(true)
+    //     //     }
+    //     // } catch (error) {
+    //     //     console.log(error);
+    //     // }
 
-        const res = await productApi.signUp(value)
-        console.log(res);
-        setIsRegister(true)
-    }
+    //     const res = await productApi.signUp(value)
+    //     console.log(res);
+    //     setIsRegister(true)
+    // }
+
+    const addUser = async () => {
+        try {
+            const res = await productApi.signUp(value);
+            console.log(res);
+    
+            if (res.status >= 200 && res.status < 300) {
+                setIsRegister(true);
+            }
+        } catch (error) {
+            console.error("Error signing up:", error);
+        }
+    };
     const verifyUser = async () => {
         // try {
         //     const req = await fetch('http://localhost:3001/api/auth/verify', {

@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/login/admin', async (req, res) => {
     console.log(req.body);
-    
+
     const { login, password } = req.body;
     if (login === process.env.ADMIN_LOGIN && password === process.env.ADMIN_PASS) {
         const token = jwt.sign({ userId: login }, process.env.JWT_SECRET, { expiresIn: '9h' });
@@ -94,7 +94,50 @@ router.get("/profile/admin", authMiddleware, async (req, res) => {
 
 router.get("/profile", authMiddleware, async (req, res) => {
     const user = await UserModel.findById(req.user.userId)
-    res.json({email: user.email, name: user.name, surName: user.surName, isVerified: user.isVerified})
+    res.json({ email: user.email, name: user.name, surName: user.surName, isVerified: user.isVerified })
 })
 
+router.put("/forgot-password", async (req, res) => {
+    console.log(req.body);
+    
+    const { email } = req.body
+    const user = await UserModel.findOne({ email })
+    if (!user) return res.status(404).json({ message: "User is not found" })
+    const resetCode = Math.floor(1000000 + Math.random() * 900000).toString()
+    console.log(resetCode);
+    
+    user.resetCode = resetCode
+    await user.save()
+    await transporter.sendMail({
+        to: email,
+        subject: 'Reset password',
+        html: resetCode
+    });
+    res.status(200).json({ message: "Check your email" })
+
+})
+router.post("/forgot-password-check", async (req, res) => {
+    const { email, resetCode } = req.body
+    const user = await UserModel.findOne({ email })
+    if (!user) return res.status(404).json({ message: "User is not found" })
+    if (user.resetCode !== resetCode) {
+        return res.status(200).json({ message: "Invalid reset code" })
+    }
+    res.status(200).json({message: "Success"})
+
+})
+router.put("/forgot-password-new", async (req, res) => {
+    const { email, code, password } = req.body
+    const user = await UserModel.findOne({ email })
+    if (!user) return res.status(404).json({ message: "User is not found" })
+    if (user.resetCode !== code) {
+        return res.status(200).json({ message: "Invalid reset code" })
+    }
+    const hashedPass = await bcrypt.hash(password, 10)
+    user.password = hashedPass
+    user.resetCode = null
+    await user.save();
+    res.status(200).json({message: "Success"})
+
+})
 module.exports = router

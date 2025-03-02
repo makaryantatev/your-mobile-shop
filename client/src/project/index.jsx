@@ -8,6 +8,8 @@ import { SignIn } from "./components/signIn";
 import { Profile } from "./components/profile/profile";
 import { EachPhone } from "./components/phones/eachPhone";
 import { Basket } from "./components/basket/basket";
+import { ForgetPass } from "./components/forgetPassword";
+import { Reviews } from "./components/reviews";
 
 export const Main = () => {
     return(
@@ -23,6 +25,8 @@ export const Main = () => {
                 <Route path="/product" element={<MyProduct/>}/>
                 <Route path="/phone/:id" element={<EachPhone/>}/>
                 <Route path="/basket" element={<Basket/>}/>
+                <Route path="/forgetPass" element={<ForgetPass/>}/>
+                <Route path="/reviews" element={<Reviews/>}/>
             </Routes>
             <MyFooter/>
         </Router>
